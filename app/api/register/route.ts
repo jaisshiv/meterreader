@@ -11,14 +11,20 @@ export async function POST(request: NextRequest) {
     if (!name || !email || !password)
       return NextResponse.json({ message: 'Name, email, and password are required' }, { status: 400 });
 
-    const existing = await UserModel.findOne({ email });
+    const normalizedEmail = email.toLowerCase();
+    const existing = await UserModel.findOne({ email: normalizedEmail });
     if (existing)
       return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
 
     const hashed = await bcrypt.hash(password, 10);
     const user = await UserModel.create({
-      name, email, phone, password: hashed,
-      walletAddress, address, utilityAccountNumber,
+      name,
+      email: normalizedEmail,
+      phone,
+      password: hashed,
+      walletAddress,
+      address,
+      utilityAccountNumber,
       role: role || 'customer',
     });
 
