@@ -1,16 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
+import { connectDB, UserModel } from '@/lib/db';
+import { signToken } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const response = await fetch("http://127.0.0.1:5000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+    await connectDB();
+    const { email, password } = await request.json();
+
+    const user = await UserModel.findOne({ email });
+    if (!user)
+      return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid)
+      return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
+
+    const token = signToken({ id: String(user._id), role: user.role, email: user.email });
+    return NextResponse.json({
+      token,
+      user: { id: String(user._id), name: user.name, role: user.role, email: user.email },
     });
-    const data = await response.json();
-    return NextResponse.json(data, { status: response.status });
-  } catch (error) {
-    return NextResponse.json({ message: "Unable to reach auth service" }, { status: 500 });
+  } catch (err: any) {
+    return NextResponse.json({ message: 'Login failed', error: err.message }, { status: 500 });
   }
 }

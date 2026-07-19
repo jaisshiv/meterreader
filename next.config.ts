@@ -2,12 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   webpack: (config) => {
+    // Prevent Node-only modules from being bundled into the browser bundle
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
       net: false,
       tls: false,
-      stream: "stream-browserify",
+      stream: false,
     };
     return config;
   },
