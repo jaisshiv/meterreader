@@ -1,0 +1,44 @@
+pragma language_version 0.23;
+import CompactStandardLibrary;
+
+export enum PartyState {
+    NOT_STARTED,
+    READY,
+    STARTED,
+    DOORS_CLOSED,
+    FEES_CLAIMED
+}
+
+export sealed ledger organizer: Bytes<32>;
+export sealed ledger maxListSize: Uint<16>;
+export sealed ledger entryFee: Uint<16>;
+export ledger partyState: PartyState;
+export ledger hashedPartyGoers: Set<Bytes<32>>;
+export ledger checkedInParty: Set<UserAddress>;
+
+constructor (partySize: Uint<16>, fee: Uint<16>, _secret: Bytes<32>) {
+    assert(partySize > 0, "The party size must be greater than zero");
+    assert(fee > 0, "Fee must be greater than zero");
+
+    const pubKey = getDappPublicKey(_secret);
+    organizer = disclose(pubKey);
+
+    entryFee = disclose(fee);
+    maxListSize = disclose(partySize);
+    partyState = PartyState.NOT_STARTED;
+}
+
+export circuit rsvp(_address: UserAddress, _secret: Bytes<32>): [] {
+    const pubKey = getDappPublicKey(_secret);
+    assert(pubKey != organizer, "Organizer cannot RSVP to the party");
+    assert(partyState == PartyState.NOT_STARTED, "The party has already started");
+    assert(hashedPartyGoers.size() < maxListSize, "The list is full");
+
+    const commitHash = commitAddress(_secret, _address.bytes);
+    assert(!hashedPartyGoers.member(commitHash), "You are already on the list");
+    hashedPartyGoers.insert(commitHash);
+
+    if (hashedPartyGoers.size() == maxListSize) {
+        partyState = PartyState.READY;
+    }
+}

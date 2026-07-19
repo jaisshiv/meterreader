@@ -1,0 +1,38 @@
+{
+  "name": "gridchain-ai",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "dev:server": "node server/index.js",
+    "build": "npm run sync:assets && next build --webpack",
+    "start": "next start",
+    "lint": "eslint",
+    "compact": "npm run compact --prefix contract",
+    "sync:assets": "node scripts/sync-zk-assets.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "ethers": "^5.7.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.0.0",
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
