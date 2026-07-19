@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const roleTitles: Record<string, string> = {
@@ -37,22 +36,39 @@ const adminView = [
 
 export default function RoleDashboardPage() {
   const params = useParams();
+  const router = useRouter();
   const role = (params?.role as string) || "customer";
   const [summary, setSummary] = useState<any>(null);
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem("gc_user");
+      if (saved) {
+        const u = JSON.parse(saved);
+        setUserName(u.name || u.email || "");
+      }
+    } catch {}
+
     fetch("/api/dashboard-summary")
       .then((res) => res.json())
       .then((data) => setSummary(data));
   }, []);
 
-  const cards = role === "company"
-    ? companyView
-    : role === "tech"
+  function handleLogout() {
+    localStorage.removeItem("gc_token");
+    localStorage.removeItem("gc_user");
+    router.push("/login");
+  }
+
+  const cards =
+    role === "company"
+      ? companyView
+      : role === "tech"
       ? techView
       : role === "admin"
-        ? adminView
-        : customerView;
+      ? adminView
+      : customerView;
 
   return (
     <main className="min-h-screen px-4 py-8 text-slate-100">
@@ -60,9 +76,19 @@ export default function RoleDashboardPage() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-cyan-300">{roleTitles[role] || roleTitles.customer}</p>
-            <h1 className="mt-2 text-3xl font-semibold text-white">Real-time utility operating console</h1>
+            <h1 className="mt-2 text-3xl font-semibold text-white">
+              Real-time utility operating console
+            </h1>
+            {userName && (
+              <p className="mt-1 text-sm text-slate-400">Welcome, {userName}</p>
+            )}
           </div>
-          <Link href="/login" className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-cyan-200">Back to login</Link>
+          <button
+            onClick={handleLogout}
+            className="rounded-full border border-red-400/30 bg-red-400/10 px-4 py-2 text-red-300 hover:bg-red-400/20 transition"
+          >
+            Logout
+          </button>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -80,16 +106,27 @@ export default function RoleDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-cyan-300">Live monitoring</p>
-                <h2 className="mt-1 text-2xl font-semibold text-white">Utility performance snapshot</h2>
+                <h2 className="mt-1 text-2xl font-semibold text-white">
+                  Utility performance snapshot
+                </h2>
               </div>
-              <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-sm text-emerald-300">Live</div>
+              <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-sm text-emerald-300">
+                Live
+              </div>
             </div>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {cards.map((item: any) => (
-                <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+                <div
+                  key={item.label}
+                  className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4"
+                >
                   <div className="text-sm text-slate-400">{item.label}</div>
-                  <div className="mt-2 text-2xl font-semibold text-white">{item.value || item.usage}</div>
-                  {item.status ? <div className="mt-1 text-sm text-cyan-300">{item.status}</div> : null}
+                  <div className="mt-2 text-2xl font-semibold text-white">
+                    {item.value || item.usage}
+                  </div>
+                  {item.status ? (
+                    <div className="mt-1 text-sm text-cyan-300">{item.status}</div>
+                  ) : null}
                 </div>
               ))}
             </div>
@@ -99,9 +136,14 @@ export default function RoleDashboardPage() {
             <div className="text-cyan-300">Alerts</div>
             <div className="mt-4 space-y-3">
               {summary?.alerts?.map((alert: any) => (
-                <div key={alert.id} className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+                <div
+                  key={alert.id}
+                  className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4"
+                >
                   <div className="text-white">{alert.title}</div>
-                  <div className="mt-1 text-sm text-slate-400">Priority: {alert.level}</div>
+                  <div className="mt-1 text-sm text-slate-400">
+                    Priority: {alert.level}
+                  </div>
                 </div>
               ))}
             </div>

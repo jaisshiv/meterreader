@@ -30,7 +30,9 @@ export default function RegisterPage() {
     });
     const data = await res.json();
     if (res.ok) {
-      window.location.href = `/dashboard/${form.role}`;
+      if (data.token) localStorage.setItem("gc_token", data.token);
+      if (data.user) localStorage.setItem("gc_user", JSON.stringify(data.user));
+      window.location.href = `/dashboard/${data.user?.role || form.role}`;
     } else {
       alert(data.message || "Registration failed");
     }

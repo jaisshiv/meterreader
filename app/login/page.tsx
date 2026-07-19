@@ -17,7 +17,9 @@ export default function LoginPage() {
     });
     const data = await res.json();
     if (res.ok) {
-      window.location.href = `/dashboard/${mode}`;
+      if (data.token) localStorage.setItem("gc_token", data.token);
+      if (data.user) localStorage.setItem("gc_user", JSON.stringify(data.user));
+      window.location.href = `/dashboard/${data.user?.role || mode}`;
     } else {
       alert(data.message || "Unable to sign in");
     }
