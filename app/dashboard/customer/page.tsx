@@ -80,7 +80,7 @@ export default function CustomerDashboard() {
   const [mounted, setMounted] = useState(false);
   const [timeStr, setTimeStr] = useState("");
   const [activeTab, setActiveTab] = useState<"overview" | "analytics" | "activity">("overview");
-  const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const timerRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
 
   const fetchState = useCallback(async (tok: string) => {
     try {
