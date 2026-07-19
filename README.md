@@ -1,36 +1,226 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ GridChain AI
 
-## Getting Started
+> **AI + Blockchain Powered Smart Utility Management System**
 
-First, run the development server:
+GridChain AI is a next-generation smart utility platform that enables users, utility companies, and technical teams to monitor, manage, and verify electricity, water, and gas usage in real time. The platform combines Artificial Intelligence, Blockchain, and IoT concepts to create a transparent, secure, and intelligent utility management system.
+
+---
+
+## 🚀 Features
+
+### 👤 Customer Dashboard
+- Real-time Electricity, Water & Gas Monitoring
+- Estimated Monthly Bill
+- AI-Based Usage Analysis
+- Energy Saving Recommendations
+- Live Notifications
+- Blockchain Verified Meter Readings
+- Profile Management
+
+### 🏢 Utility Company Dashboard
+- Customer Management
+- Meter Assignment
+- Bill Generation
+- Usage Analytics
+- Blockchain Verification
+- Customer Complaint Management
+
+### 👨‍🔧 Technical Team Dashboard
+- Live Meter Status
+- Fault Detection
+- Leak Detection Alerts
+- Device Monitoring
+- Maintenance Requests
+- System Health Dashboard
+
+### 👨‍💼 Admin Dashboard
+- Manage Users
+- Manage Utility Companies
+- Role Management
+- Analytics
+- Audit Logs
+- Platform Monitoring
+
+---
+
+# 🤖 AI Features
+
+- Electricity Consumption Prediction
+- Water Leak Detection
+- Gas Leak Detection
+- Bill Prediction
+- Energy Saving Suggestions
+- Usage Pattern Analysis
+- Smart Alerts
+
+---
+
+# ⛓ Blockchain Features
+
+- Immutable Meter Readings
+- Wallet Authentication
+- Blockchain Transaction History
+- Reading Verification
+- Secure Data Storage
+- Tamper-Proof Records
+
+---
+
+# 📊 Dashboard
+
+- Live Utility Monitoring
+- Daily / Weekly / Monthly Analytics
+- Interactive Charts
+- Real-Time Status
+- Smart Notifications
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+- Next.js
+- React.js
+- Tailwind CSS
+- Framer Motion
+- Recharts
+
+## Backend
+- Node.js
+- Express.js
+- MongoDB
+- JWT Authentication
+- Socket.io
+
+## Blockchain
+- Solidity
+- Hardhat
+- Ethers.js
+- MetaMask
+
+## AI
+- Google Gemini API
+
+---
+
+# 📁 Project Structure
+
+```
+GridChainAI
+│
+├── app
+├── components
+├── contract
+├── lib
+├── public
+├── server
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   └── server.js
+├── wallet-connector
+└── README.md
+```
+
+---
+
+# ⚙ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/yourusername/GridChainAI.git
+```
+
+### Install Frontend
+
+```bash
+npm install
+```
+
+### Install Backend
+
+```bash
+cd server
+npm install
+```
+
+### Configure Environment Variables
+
+Create a `.env` file inside the `server` folder.
+
+```env
+PORT=5000
+
+MONGODB_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret
+
+GEMINI_API_KEY=your_api_key
+```
+
+### Start Backend
+
+```bash
+cd server
+npm run dev
+```
+
+### Start Frontend
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 📌 Future Scope
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Smart IoT Meter Integration
+- Mobile Application
+- UPI Bill Payments
+- Carbon Footprint Tracking
+- Solar Energy Marketplace
+- AI-Based Fault Prediction
+- Smart City Integration
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+# 🔒 Security
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- JWT Authentication
+- Password Hashing (bcrypt)
+- Role-Based Access Control (RBAC)
+- Secure REST APIs
+- Blockchain Verification
+- Environment Variable Protection
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+# 🌍 Real-World Applications
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Smart Cities
+- Utility Companies
+- Residential Societies
+- Industrial Parks
+- Government Energy Departments
+- Water Supply Boards
+- Gas Distribution Networks
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+# 👨‍💻 Team
+
+Developed for the **MLH Hackathon** to demonstrate how AI, Blockchain, and IoT can work together to create a transparent and intelligent utility management platform.
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+## ⭐ If you like this project, don't forget to star the repository!
